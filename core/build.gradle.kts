@@ -64,6 +64,11 @@ dependencies {
     implementation(libs.hilt)
     kapt(libs.hilt.compiler)
 
+    // Internet
+    implementation(platform(libs.okhttp3.bom))
+    implementation(libs.bundles.okhttp3)
+    implementation(libs.bundles.retrofit2)
+
     // Test
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)

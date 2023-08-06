@@ -1,25 +1,18 @@
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
-    alias(libs.plugins.androidApplication)
+    alias(libs.plugins.androidLibrary)
     alias(libs.plugins.kotlinAndroid)
 }
 
 android {
-    namespace = "dev.wxlf.starwarslibrary"
+    namespace = "dev.wxlf.starwarslibrary.core"
     compileSdk = 33
 
     defaultConfig {
-        applicationId = "dev.wxlf.starwarslibrary"
         minSdk = 28
-        //noinspection OldTargetApi
-        targetSdk = 33
-        versionCode = 1
-        versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        vectorDrawables {
-            useSupportLibrary = true
-        }
+        consumerProguardFiles("consumer-rules.pro")
     }
 
     buildTypes {
@@ -52,8 +45,6 @@ android {
 }
 
 dependencies {
-    // Project
-    implementation(projects.core)
 
     // Core
     implementation(libs.core.ktx)

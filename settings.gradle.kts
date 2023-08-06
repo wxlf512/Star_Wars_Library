@@ -1,3 +1,6 @@
+@file:Suppress("UnstableApiUsage")
+
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 pluginManagement {
     repositories {
         google()
@@ -13,5 +16,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Star Wars Library"
+rootProject.name = "Star_Wars_Library"
 include(":app")
+include(":core")

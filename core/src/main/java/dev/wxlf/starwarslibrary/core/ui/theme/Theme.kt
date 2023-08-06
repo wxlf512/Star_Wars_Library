@@ -1,4 +1,4 @@
-package dev.wxlf.starwarslibrary.ui.theme
+package dev.wxlf.starwarslibrary.core.ui.theme
 
 import android.app.Activity
 import android.os.Build

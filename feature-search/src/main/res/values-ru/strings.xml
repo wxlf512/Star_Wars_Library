@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="search_placeholder">Поиск</string>
+    <string name="people">Люди</string>
+    <string name="starships">Звездолёты</string>
+    <string name="planets">Планеты</string>
+    <string name="search_tip">Начните вводить запрос, чтобы увидеть результаты</string>
+</resources>

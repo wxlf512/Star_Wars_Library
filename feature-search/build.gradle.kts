@@ -62,9 +62,14 @@ dependencies {
     implementation(libs.ui.tooling.preview)
     implementation(libs.material3)
 
+    // Navigation
+    implementation(libs.navigation.compose)
+
     // Hilt
     implementation(libs.hilt)
     kapt(libs.hilt.compiler)
+    implementation(libs.hilt.navigation.compose)
+    kapt(libs.hilt.androidx.compiler)
 
     // Test
     testImplementation(libs.junit)
@@ -75,4 +80,5 @@ dependencies {
     androidTestImplementation(libs.ui.test.junit4)
     debugImplementation(libs.ui.tooling)
     debugImplementation(libs.ui.test.manifest)
+    debugImplementation(libs.bundles.customview)
 }

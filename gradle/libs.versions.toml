@@ -13,6 +13,11 @@ hilt = "2.47"
 okhttp3 = "4.11.0"
 retrofit2 = "2.9.0"
 mockito = "5.4.0"
+navigation = "2.6.0"
+hilt-navigation = "1.0.0"
+accompanist = "0.30.1"
+customview = "1.2.0-alpha02"
+customview-poolingcontainer = "1.0.0"
 
 [libraries]
 # Core
@@ -35,10 +40,20 @@ ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview
 ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 material3 = { group = "androidx.compose.material3", name = "material3" }
+accompanist-systemuicontroller = { group = "com.google.accompanist", name = "accompanist-systemuicontroller", version.ref = "accompanist" }
+
+# CustomView
+customview = { group = "androidx.customview", name = "customview", version.ref = "customview" }
+customview-poolingcontainer = { group = "androidx.customview", name = "customview-poolingcontainer", version.ref = "customview-poolingcontainer" }
+
+# Navigation
+navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigation" }
 
 # Hilt
 hilt = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
 hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hilt" }
+hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hilt-navigation" }
+hilt-androidx-compiler = { group = "androidx.hilt", name = "hilt-compiler", version.ref = "hilt-navigation" }
 
 # OkHttp3
 okhttp3-bom = { group = "com.squareup.okhttp3", name = "okhttp-bom", version.ref = "okhttp3" }
@@ -59,3 +74,4 @@ hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 [bundles]
 okhttp3 = ["okhttp3", "okhttp3-logging-interceptor"]
 retrofit2 = ["retrofit2", "retrofit2-converter-gson"]
+customview = ["customview", "customview-poolingcontainer"]

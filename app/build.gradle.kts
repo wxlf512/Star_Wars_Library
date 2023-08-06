@@ -69,10 +69,16 @@ dependencies {
     implementation(libs.ui.graphics)
     implementation(libs.ui.tooling.preview)
     implementation(libs.material3)
+    implementation(libs.accompanist.systemuicontroller)
+
+    // Navigation
+    implementation(libs.navigation.compose)
 
     // Hilt
     implementation(libs.hilt)
     kapt(libs.hilt.compiler)
+    implementation(libs.hilt.navigation.compose)
+    kapt(libs.hilt.androidx.compiler)
 
     // Test
     testImplementation(libs.junit)

@@ -15,4 +15,8 @@
     <string name="planet_population">Population: %1$s</string>
     <string name="error_while_add_to_favorites">Error while add to favorites</string>
     <string name="error_while_delete_from_favorites">Error while delete from favorites</string>
+    <string name="films">Films</string>
+    <string name="error">Error</string>
+    <string name="director">"Director: "</string>
+    <string name="producer">"Producer: "</string>
 </resources>

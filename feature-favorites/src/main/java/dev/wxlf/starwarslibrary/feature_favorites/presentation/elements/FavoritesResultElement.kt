@@ -29,6 +29,7 @@ import dev.wxlf.starwarslibrary.core.util.SearchType
 import dev.wxlf.starwarslibrary.core.util.SearchType.*
 import dev.wxlf.starwarslibrary.feature_favorites.R
 import dev.wxlf.starwarslibrary.feature_favorites.domain.usecases.DeleteFromFavoritesUseCase
+import dev.wxlf.starwarslibrary.feature_favorites.domain.usecases.GetFilmsUseCase
 import dev.wxlf.starwarslibrary.feature_favorites.domain.usecases.GetPeopleUseCase
 import dev.wxlf.starwarslibrary.feature_favorites.domain.usecases.GetPlanetsUseCase
 import dev.wxlf.starwarslibrary.feature_favorites.domain.usecases.GetStarshipsUseCase
@@ -42,7 +43,9 @@ fun FavoritesResultElement(
     getPeopleState: GetPeopleUseCase.Result,
     getStarshipsState: GetStarshipsUseCase.Result,
     getPlanetsState: GetPlanetsUseCase.Result,
+    getFilmsState: GetFilmsUseCase.Result,
     type: SearchType,
+    films: Boolean,
     deleteFromFavorites: (url: String, type: SearchType) -> Unit
 ) {
     val context = LocalContext.current
@@ -82,44 +85,14 @@ fun FavoritesResultElement(
             favorites.addAll(loadFavoritesState.favorites)
         }
     }
-    when (type) {
-        PEOPLE -> {
-            when (getPeopleState) {
-                is GetPeopleUseCase.Result.Error -> {
-                    Box(modifier = modifier.fillMaxSize()) {
-                        Text(
-                            getPeopleState.msg,
-                            style = MaterialTheme.typography.headlineLarge,
-                            textAlign = TextAlign.Center,
-                            modifier = Modifier
-                                .align(Alignment.Center)
-                                .padding(16.dp)
-                        )
-                    }
-                }
-
-                GetPeopleUseCase.Result.Loading -> {
-                    Box(modifier = modifier.fillMaxSize()) {
-                        CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
-                    }
-                }
-
-                is GetPeopleUseCase.Result.Success -> {
-                    if (getPeopleState.people.isNotEmpty())
-                        LazyColumn(modifier = modifier.fillMaxSize()) {
-                            items(getPeopleState.people) {
-                                PersonElement(
-                                    personModel = it,
-                                    inFavorite = true
-                                ) {
-                                    deleteFromFavorites(it.url, type)
-                                }
-                            }
-                        }
-                    else
+    if (!films)
+        when (type) {
+            PEOPLE -> {
+                when (getPeopleState) {
+                    is GetPeopleUseCase.Result.Error -> {
                         Box(modifier = modifier.fillMaxSize()) {
                             Text(
-                                stringResource(R.string.nothing_found),
+                                getPeopleState.msg,
                                 style = MaterialTheme.typography.headlineLarge,
                                 textAlign = TextAlign.Center,
                                 modifier = Modifier
@@ -127,47 +100,47 @@ fun FavoritesResultElement(
                                     .padding(16.dp)
                             )
                         }
-                }
-            }
-        }
-
-        STARSHIPS -> {
-            when (getStarshipsState) {
-                is GetStarshipsUseCase.Result.Error -> {
-                    Box(modifier = modifier.fillMaxSize()) {
-                        Text(
-                            getStarshipsState.msg,
-                            style = MaterialTheme.typography.headlineLarge,
-                            textAlign = TextAlign.Center,
-                            modifier = Modifier
-                                .align(Alignment.Center)
-                                .padding(16.dp)
-                        )
                     }
-                }
 
-                GetStarshipsUseCase.Result.Loading -> {
-                    Box(modifier = modifier.fillMaxSize()) {
-                        CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+                    GetPeopleUseCase.Result.Loading -> {
+                        Box(modifier = modifier.fillMaxSize()) {
+                            CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+                        }
                     }
-                }
 
-                is GetStarshipsUseCase.Result.Success -> {
-                    if (getStarshipsState.starships.isNotEmpty())
-                        LazyColumn(modifier = modifier.fillMaxSize()) {
-                            items(getStarshipsState.starships) {
-                                StarshipElement(
-                                    starshipModel = it,
-                                    inFavorite = true
-                                ) {
-                                    deleteFromFavorites(it.url, type)
+                    is GetPeopleUseCase.Result.Success -> {
+                        if (getPeopleState.people.isNotEmpty())
+                            LazyColumn(modifier = modifier.fillMaxSize()) {
+                                items(getPeopleState.people) {
+                                    PersonElement(
+                                        personModel = it,
+                                        inFavorite = true
+                                    ) {
+                                        deleteFromFavorites(it.url, type)
+                                    }
                                 }
                             }
-                        }
-                    else
+                        else
+                            Box(modifier = modifier.fillMaxSize()) {
+                                Text(
+                                    stringResource(R.string.nothing_found),
+                                    style = MaterialTheme.typography.headlineLarge,
+                                    textAlign = TextAlign.Center,
+                                    modifier = Modifier
+                                        .align(Alignment.Center)
+                                        .padding(16.dp)
+                                )
+                            }
+                    }
+                }
+            }
+
+            STARSHIPS -> {
+                when (getStarshipsState) {
+                    is GetStarshipsUseCase.Result.Error -> {
                         Box(modifier = modifier.fillMaxSize()) {
                             Text(
-                                stringResource(R.string.nothing_found),
+                                getStarshipsState.msg,
                                 style = MaterialTheme.typography.headlineLarge,
                                 textAlign = TextAlign.Center,
                                 modifier = Modifier
@@ -175,47 +148,47 @@ fun FavoritesResultElement(
                                     .padding(16.dp)
                             )
                         }
-                }
-            }
-        }
-
-        PLANETS -> {
-            when (getPlanetsState) {
-                is GetPlanetsUseCase.Result.Error -> {
-                    Box(modifier = modifier.fillMaxSize()) {
-                        Text(
-                            getPlanetsState.msg,
-                            style = MaterialTheme.typography.headlineLarge,
-                            textAlign = TextAlign.Center,
-                            modifier = Modifier
-                                .align(Alignment.Center)
-                                .padding(16.dp)
-                        )
                     }
-                }
 
-                GetPlanetsUseCase.Result.Loading -> {
-                    Box(modifier = modifier.fillMaxSize()) {
-                        CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+                    GetStarshipsUseCase.Result.Loading -> {
+                        Box(modifier = modifier.fillMaxSize()) {
+                            CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+                        }
                     }
-                }
 
-                is GetPlanetsUseCase.Result.Success -> {
-                    if (getPlanetsState.planets.isNotEmpty())
-                        LazyColumn(modifier = modifier.fillMaxSize()) {
-                            items(getPlanetsState.planets) {
-                                PlanetElement(
-                                    planetModel = it,
-                                    inFavorite = true
-                                ) {
-                                    deleteFromFavorites(it.url, type)
+                    is GetStarshipsUseCase.Result.Success -> {
+                        if (getStarshipsState.starships.isNotEmpty())
+                            LazyColumn(modifier = modifier.fillMaxSize()) {
+                                items(getStarshipsState.starships) {
+                                    StarshipElement(
+                                        starshipModel = it,
+                                        inFavorite = true
+                                    ) {
+                                        deleteFromFavorites(it.url, type)
+                                    }
                                 }
                             }
-                        }
-                    else
+                        else
+                            Box(modifier = modifier.fillMaxSize()) {
+                                Text(
+                                    stringResource(R.string.nothing_found),
+                                    style = MaterialTheme.typography.headlineLarge,
+                                    textAlign = TextAlign.Center,
+                                    modifier = Modifier
+                                        .align(Alignment.Center)
+                                        .padding(16.dp)
+                                )
+                            }
+                    }
+                }
+            }
+
+            PLANETS -> {
+                when (getPlanetsState) {
+                    is GetPlanetsUseCase.Result.Error -> {
                         Box(modifier = modifier.fillMaxSize()) {
                             Text(
-                                stringResource(R.string.nothing_found),
+                                getPlanetsState.msg,
                                 style = MaterialTheme.typography.headlineLarge,
                                 textAlign = TextAlign.Center,
                                 modifier = Modifier
@@ -223,10 +196,92 @@ fun FavoritesResultElement(
                                     .padding(16.dp)
                             )
                         }
+                    }
+
+                    GetPlanetsUseCase.Result.Loading -> {
+                        Box(modifier = modifier.fillMaxSize()) {
+                            CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+                        }
+                    }
+
+                    is GetPlanetsUseCase.Result.Success -> {
+                        if (getPlanetsState.planets.isNotEmpty())
+                            LazyColumn(modifier = modifier.fillMaxSize()) {
+                                items(getPlanetsState.planets) {
+                                    PlanetElement(
+                                        planetModel = it,
+                                        inFavorite = true
+                                    ) {
+                                        deleteFromFavorites(it.url, type)
+                                    }
+                                }
+                            }
+                        else
+                            Box(modifier = modifier.fillMaxSize()) {
+                                Text(
+                                    stringResource(R.string.nothing_found),
+                                    style = MaterialTheme.typography.headlineLarge,
+                                    textAlign = TextAlign.Center,
+                                    modifier = Modifier
+                                        .align(Alignment.Center)
+                                        .padding(16.dp)
+                                )
+                            }
+                    }
                 }
             }
         }
-    }
+    else
+        when (getFilmsState) {
+            is GetFilmsUseCase.Result.Error -> {
+                Box(modifier = modifier.fillMaxSize()) {
+                    Text(
+                        getFilmsState.msg,
+                        style = MaterialTheme.typography.headlineLarge,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier
+                            .align(Alignment.Center)
+                            .padding(16.dp)
+                    )
+                }
+            }
+            is GetFilmsUseCase.Result.ErrorRes -> {
+                Box(modifier = modifier.fillMaxSize()) {
+                    Text(
+                        stringResource(getFilmsState.msg),
+                        style = MaterialTheme.typography.headlineLarge,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier
+                            .align(Alignment.Center)
+                            .padding(16.dp)
+                    )
+                }
+            }
+            GetFilmsUseCase.Result.Loading -> {
+                Box(modifier = modifier.fillMaxSize()) {
+                    CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+                }
+            }
+            is GetFilmsUseCase.Result.Success -> {
+                if (getFilmsState.films.isNotEmpty())
+                    LazyColumn(modifier = modifier.fillMaxSize()) {
+                        items(getFilmsState.films) {
+                            FilmElement(filmModel = it)
+                        }
+                    }
+                else
+                    Box(modifier = modifier.fillMaxSize()) {
+                        Text(
+                            stringResource(R.string.nothing_found),
+                            style = MaterialTheme.typography.headlineLarge,
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier
+                                .align(Alignment.Center)
+                                .padding(16.dp)
+                        )
+                    }
+            }
+        }
 }
 
 @Preview(
@@ -248,7 +303,9 @@ fun SearchResultElementPreview() {
                 getPeopleState = GetPeopleUseCase.Result.Loading,
                 getStarshipsState = GetStarshipsUseCase.Result.Loading,
                 getPlanetsState = GetPlanetsUseCase.Result.Loading,
-                type = PEOPLE
+                getFilmsState = GetFilmsUseCase.Result.Loading,
+                type = PEOPLE,
+                films = false
             )
         }
     }

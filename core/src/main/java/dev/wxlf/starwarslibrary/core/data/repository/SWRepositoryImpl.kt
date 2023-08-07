@@ -14,14 +14,14 @@ class SWRepositoryImpl(
     private val remote: SWRemoteDataSource,
     private val local: SWLocalDataSource
 ) : SWRepository {
-    override suspend fun searchPeople(query: String): SWModel<PersonModel> =
-        remote.searchPeople(query)
+    override suspend fun searchPeople(query: String, page: Int): SWModel<PersonModel> =
+        remote.searchPeople(query, page)
 
-    override suspend fun searchStarships(query: String): SWModel<StarshipModel> =
-        remote.searchStarships(query)
+    override suspend fun searchStarships(query: String, page: Int): SWModel<StarshipModel> =
+        remote.searchStarships(query, page)
 
-    override suspend fun searchPlanets(query: String): SWModel<PlanetModel> =
-        remote.searchPlanets(query)
+    override suspend fun searchPlanets(query: String, page: Int): SWModel<PlanetModel> =
+        remote.searchPlanets(query, page)
 
     override suspend fun getPerson(id: Int): PersonModel =
         remote.getPerson(id)

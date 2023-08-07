@@ -14,4 +14,6 @@
     <string name="starship_model">"Model: "</string>
     <string name="planet_diameter">Diameter: %1$s</string>
     <string name="planet_population">Population: %1$s</string>
+    <string name="error_while_add_to_favorites">Error while add to favorites</string>
+    <string name="error_while_delete_from_favorites">Error while delete from favorites</string>
 </resources>

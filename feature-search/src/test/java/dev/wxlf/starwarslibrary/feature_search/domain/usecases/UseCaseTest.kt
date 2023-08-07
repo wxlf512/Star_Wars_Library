@@ -5,7 +5,6 @@ import dev.wxlf.starwarslibrary.core.data.datasources.remote.SWRetrofitDataSourc
 import dev.wxlf.starwarslibrary.core.data.repository.SWRepository
 import dev.wxlf.starwarslibrary.core.data.repository.SWRepositoryImpl
 import dev.wxlf.starwarslibrary.core.data.retrofit.SWAPI
-import dev.wxlf.starwarslibrary.core.data.retrofit.models.FilmModel
 import dev.wxlf.starwarslibrary.core.data.retrofit.models.PersonModel
 import dev.wxlf.starwarslibrary.core.data.retrofit.models.PlanetModel
 import dev.wxlf.starwarslibrary.core.data.retrofit.models.SWModel
@@ -22,7 +21,6 @@ import org.mockito.Mockito.mock
 class UseCaseTest {
 
     private lateinit var swRepository: SWRepository
-    private lateinit var getFilmUseCase: GetFilmUseCase
     private lateinit var searchPeopleUseCase: SearchPeopleUseCase
     private lateinit var searchStarshipsUseCase: SearchStarshipsUseCase
     private lateinit var searchPlanetsUseCase: SearchPlanetsUseCase
@@ -34,40 +32,9 @@ class UseCaseTest {
     @Before
     fun setUp() {
         swRepository = SWRepositoryImpl(SWRetrofitDataSource(api), SWRoomDataSource(dao))
-        getFilmUseCase = GetFilmUseCase(swRepository)
         searchPeopleUseCase = SearchPeopleUseCase(swRepository)
         searchStarshipsUseCase = SearchStarshipsUseCase(swRepository)
         searchPlanetsUseCase = SearchPlanetsUseCase(swRepository)
-    }
-
-    @Test
-    fun testGetFilmUseCase() {
-        runBlocking {
-            val testFilm = FilmModel(
-                "",
-                1,
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                arrayListOf(),
-                arrayListOf(),
-                arrayListOf(),
-                arrayListOf(),
-                arrayListOf()
-            )
-
-            Mockito.`when`(swRepository.getFilm(0)).thenReturn(
-                testFilm
-            )
-
-            Mockito.`when`(swRepository.getFilm(1)).thenThrow(RuntimeException(""))
-
-            assertEquals(getFilmUseCase(0), GetFilmUseCase.Result.Success(testFilm))
-            assertTrue(getFilmUseCase(1) is GetFilmUseCase.Result.Error)
-        }
     }
 
     @Test

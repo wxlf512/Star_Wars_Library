@@ -1,4 +1,4 @@
-package dev.wxlf.starwarslibrary.core.data.datasources
+package dev.wxlf.starwarslibrary.core.data.datasources.remote
 
 import dev.wxlf.starwarslibrary.core.data.retrofit.models.FilmModel
 import dev.wxlf.starwarslibrary.core.data.retrofit.models.PersonModel

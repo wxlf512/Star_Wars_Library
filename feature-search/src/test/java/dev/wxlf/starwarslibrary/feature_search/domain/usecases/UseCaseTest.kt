@@ -1,6 +1,7 @@
 package dev.wxlf.starwarslibrary.feature_search.domain.usecases
 
-import dev.wxlf.starwarslibrary.core.data.datasources.SWRetrofitDataSource
+import dev.wxlf.starwarslibrary.core.data.datasources.local.SWRoomDataSource
+import dev.wxlf.starwarslibrary.core.data.datasources.remote.SWRetrofitDataSource
 import dev.wxlf.starwarslibrary.core.data.repository.SWRepository
 import dev.wxlf.starwarslibrary.core.data.repository.SWRepositoryImpl
 import dev.wxlf.starwarslibrary.core.data.retrofit.SWAPI
@@ -9,10 +10,12 @@ import dev.wxlf.starwarslibrary.core.data.retrofit.models.PersonModel
 import dev.wxlf.starwarslibrary.core.data.retrofit.models.PlanetModel
 import dev.wxlf.starwarslibrary.core.data.retrofit.models.SWModel
 import dev.wxlf.starwarslibrary.core.data.retrofit.models.StarshipModel
+import dev.wxlf.starwarslibrary.core.data.room.FavoritesDao
 import kotlinx.coroutines.runBlocking
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
-import org.junit.Assert.*
 import org.mockito.Mockito
 import org.mockito.Mockito.mock
 
@@ -26,10 +29,11 @@ class UseCaseTest {
 
 
     private val api: SWAPI = mock(SWAPI::class.java)
+    private val dao: FavoritesDao = mock(FavoritesDao::class.java)
 
     @Before
     fun setUp() {
-        swRepository = SWRepositoryImpl(SWRetrofitDataSource(api))
+        swRepository = SWRepositoryImpl(SWRetrofitDataSource(api), SWRoomDataSource(dao))
         getFilmUseCase = GetFilmUseCase(swRepository)
         searchPeopleUseCase = SearchPeopleUseCase(swRepository)
         searchStarshipsUseCase = SearchStarshipsUseCase(swRepository)

@@ -26,10 +26,10 @@ import dev.wxlf.starwarslibrary.feature_search.R
 import dev.wxlf.starwarslibrary.feature_search.domain.usecases.SearchPeopleUseCase
 import dev.wxlf.starwarslibrary.feature_search.domain.usecases.SearchPlanetsUseCase
 import dev.wxlf.starwarslibrary.feature_search.domain.usecases.SearchStarshipsUseCase
-import dev.wxlf.starwarslibrary.feature_search.presentation.util.SearchType
-import dev.wxlf.starwarslibrary.feature_search.presentation.util.SearchType.PEOPLE
-import dev.wxlf.starwarslibrary.feature_search.presentation.util.SearchType.PLANETS
-import dev.wxlf.starwarslibrary.feature_search.presentation.util.SearchType.STARSHIPS
+import dev.wxlf.starwarslibrary.core.util.SearchType
+import dev.wxlf.starwarslibrary.core.util.SearchType.PEOPLE
+import dev.wxlf.starwarslibrary.core.util.SearchType.PLANETS
+import dev.wxlf.starwarslibrary.core.util.SearchType.STARSHIPS
 
 @Composable
 fun SearchResultElement(

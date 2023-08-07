@@ -21,7 +21,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dagger.hilt.android.AndroidEntryPoint
-import dev.wxlf.starwarslibrary.core.Routes
+import dev.wxlf.starwarslibrary.core.util.Routes
 import dev.wxlf.starwarslibrary.core.ui.theme.StarWarsLibraryTheme
 import dev.wxlf.starwarslibrary.feature_search.presentation.screens.SearchScreen
 

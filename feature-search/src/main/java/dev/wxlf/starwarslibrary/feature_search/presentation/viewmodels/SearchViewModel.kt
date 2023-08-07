@@ -7,8 +7,8 @@ import dev.wxlf.starwarslibrary.feature_search.domain.usecases.GetFilmUseCase
 import dev.wxlf.starwarslibrary.feature_search.domain.usecases.SearchPeopleUseCase
 import dev.wxlf.starwarslibrary.feature_search.domain.usecases.SearchPlanetsUseCase
 import dev.wxlf.starwarslibrary.feature_search.domain.usecases.SearchStarshipsUseCase
-import dev.wxlf.starwarslibrary.feature_search.presentation.util.SearchType
-import dev.wxlf.starwarslibrary.feature_search.presentation.util.SearchType.*
+import dev.wxlf.starwarslibrary.core.util.SearchType
+import dev.wxlf.starwarslibrary.core.util.SearchType.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

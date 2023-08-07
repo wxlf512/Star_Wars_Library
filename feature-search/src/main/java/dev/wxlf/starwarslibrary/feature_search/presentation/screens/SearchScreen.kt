@@ -34,7 +34,7 @@ import dev.wxlf.starwarslibrary.feature_search.domain.usecases.SearchStarshipsUs
 import dev.wxlf.starwarslibrary.feature_search.presentation.elements.FilterElement
 import dev.wxlf.starwarslibrary.feature_search.presentation.elements.SearchElement
 import dev.wxlf.starwarslibrary.feature_search.presentation.elements.SearchResultElement
-import dev.wxlf.starwarslibrary.feature_search.presentation.util.SearchType
+import dev.wxlf.starwarslibrary.core.util.SearchType
 import dev.wxlf.starwarslibrary.feature_search.presentation.viewmodels.SearchViewModel
 
 @Composable

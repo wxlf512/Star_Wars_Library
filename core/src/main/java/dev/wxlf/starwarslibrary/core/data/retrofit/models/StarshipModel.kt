@@ -24,7 +24,7 @@ data class StarshipModel(
 
     var name: String,
     var passengers: String,
-    var films: String,
+    var films: ArrayList<String>,
     var pilots: ArrayList<String>,
 
     @SerializedName("starship_class") var starshipClass: String,

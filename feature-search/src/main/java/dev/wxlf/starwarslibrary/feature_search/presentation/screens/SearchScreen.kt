@@ -3,6 +3,7 @@ package dev.wxlf.starwarslibrary.feature_search.presentation.screens
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -32,6 +33,7 @@ import dev.wxlf.starwarslibrary.feature_search.domain.usecases.SearchPlanetsUseC
 import dev.wxlf.starwarslibrary.feature_search.domain.usecases.SearchStarshipsUseCase
 import dev.wxlf.starwarslibrary.feature_search.presentation.elements.FilterElement
 import dev.wxlf.starwarslibrary.feature_search.presentation.elements.SearchElement
+import dev.wxlf.starwarslibrary.feature_search.presentation.elements.SearchResultElement
 import dev.wxlf.starwarslibrary.feature_search.presentation.util.SearchType
 import dev.wxlf.starwarslibrary.feature_search.presentation.viewmodels.SearchViewModel
 
@@ -68,12 +70,14 @@ fun SearchScreenContent(
             query = it
             search(query, type)
         }
-        FilterElement(type = type, changeType = { type = it })
+        FilterElement(type = type) {
+            type = it
+            search(query, type)
+        }
 
         if (query.length < 2)
             Column(
-                modifier = Modifier
-                    .padding(top = 16.dp),
+                modifier = Modifier.fillMaxHeight(),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
@@ -84,6 +88,13 @@ fun SearchScreenContent(
                 )
                 Text(stringResource(R.string.search_tip), textAlign = TextAlign.Center)
             }
+        else
+            SearchResultElement(
+                searchPeopleState = searchPeopleState,
+                searchStarshipsState = searchStarshipsState,
+                searchPlanetsState = searchPlanetsState,
+                type = type
+            )
     }
 }
 

@@ -49,6 +49,7 @@ fun SearchElement(modifier: Modifier = Modifier, query: String, onValueChange: (
         },
         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
         keyboardActions = KeyboardActions(onAny = {
+            onValueChange(query)
             focusManager.clearFocus()
         })
     )

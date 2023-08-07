@@ -80,7 +80,7 @@ fun FilterElement(
                 selected = type == SearchType.PLANETS && !films,
                 onClick = {
                     changeType(SearchType.PLANETS, false)
-                    films = true
+                    films = false
                 },
                 label = { Text(text = stringResource(R.string.planets)) },
                 leadingIcon = {

@@ -2,16 +2,19 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.kotlinAndroid)
+    alias(libs.plugins.kapt)
+    alias(libs.plugins.hilt)
 }
 
 android {
     namespace = "dev.wxlf.starwarslibrary"
-    compileSdk = 34
+    compileSdk = 33
 
     defaultConfig {
         applicationId = "dev.wxlf.starwarslibrary"
         minSdk = 28
-        targetSdk = 34
+        //noinspection OldTargetApi
+        targetSdk = 33
         versionCode = 1
         versionName = "1.0"
 
@@ -31,11 +34,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
     buildFeatures {
         compose = true
@@ -51,6 +54,10 @@ android {
 }
 
 dependencies {
+    // Project
+    implementation(projects.core)
+    implementation(projects.featureSearch)
+    implementation(projects.featureFavorites)
 
     // Core
     implementation(libs.core.ktx)
@@ -63,6 +70,16 @@ dependencies {
     implementation(libs.ui.graphics)
     implementation(libs.ui.tooling.preview)
     implementation(libs.material3)
+    implementation(libs.accompanist.systemuicontroller)
+
+    // Navigation
+    implementation(libs.navigation.compose)
+
+    // Hilt
+    implementation(libs.hilt)
+    kapt(libs.hilt.compiler)
+    implementation(libs.hilt.navigation.compose)
+    kapt(libs.hilt.androidx.compiler)
 
     // Test
     testImplementation(libs.junit)

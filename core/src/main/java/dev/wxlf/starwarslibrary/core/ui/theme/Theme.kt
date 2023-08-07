@@ -1,4 +1,4 @@
-package dev.wxlf.starwarslibrary.ui.theme
+package dev.wxlf.starwarslibrary.core.ui.theme
 
 import android.app.Activity
 import android.os.Build
@@ -59,6 +59,7 @@ fun StarWarsLibraryTheme(
             val window = (view.context as Activity).window
             window.statusBarColor = colorScheme.primary.toArgb()
             WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = darkTheme
+            WindowCompat.setDecorFitsSystemWindows(window, false)
         }
     }
 

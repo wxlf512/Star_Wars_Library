@@ -10,11 +10,11 @@ import dev.wxlf.starwarslibrary.core.util.SearchType
 
 interface SWRepository {
 
-    suspend fun searchPeople(query: String): SWModel<PersonModel>
+    suspend fun searchPeople(query: String, page: Int): SWModel<PersonModel>
 
-    suspend fun searchStarships(query: String): SWModel<StarshipModel>
+    suspend fun searchStarships(query: String, page: Int): SWModel<StarshipModel>
 
-    suspend fun searchPlanets(query: String): SWModel<PlanetModel>
+    suspend fun searchPlanets(query: String, page: Int): SWModel<PlanetModel>
 
     suspend fun getPerson(id: Int): PersonModel
 

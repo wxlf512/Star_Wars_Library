@@ -136,14 +136,6 @@ fun FavoritesScreenContent(
                     )
             }
         }
-
-//        else
-//            FavoritesResultElement(
-//                deleteFromFavoritesState = deleteFromFavoritesState,
-//                loadFavoritesState = loadFavoritesState,
-//                deleteFromFavorites = { url, favType -> deleteFromFavorites(url, favType) },
-//                type = type
-//            )
     }
 }
 

@@ -12,13 +12,13 @@ import retrofit2.http.Query
 interface SWAPI {
 
     @GET("people")
-    suspend fun searchPeople(@Query("search") query: String): SWModel<PersonModel>
+    suspend fun searchPeople(@Query("search") query: String, @Query("page") page: Int): SWModel<PersonModel>
 
     @GET("starships")
-    suspend fun searchStarships(@Query("search") query: String): SWModel<StarshipModel>
+    suspend fun searchStarships(@Query("search") query: String, @Query("page") page: Int): SWModel<StarshipModel>
 
     @GET("planets")
-    suspend fun searchPlanets(@Query("search") query: String): SWModel<PlanetModel>
+    suspend fun searchPlanets(@Query("search") query: String, @Query("page") page: Int): SWModel<PlanetModel>
 
     @GET("people/{id}")
     suspend fun getPerson(@Path("id") id: Int): PersonModel

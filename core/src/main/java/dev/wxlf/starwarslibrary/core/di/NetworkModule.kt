@@ -5,7 +5,6 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import dev.wxlf.starwarslibrary.core.data.retrofit.SWAPI
-import okhttp3.HttpUrl.Companion.toHttpUrl
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -14,9 +13,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-open class NetworkModule {
-
-    protected open fun baseUrl() = "https://swapi.dev/api/".toHttpUrl()
+class NetworkModule {
 
     @Provides
     @Singleton
@@ -29,7 +26,7 @@ open class NetworkModule {
             .build()
 
         val retrofit = Retrofit.Builder()
-            .baseUrl(baseUrl())
+            .baseUrl("https://swapi.dev/api/")
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()

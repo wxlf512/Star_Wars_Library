@@ -11,7 +11,6 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -32,6 +31,7 @@ import dev.wxlf.starwarslibrary.feature_search.domain.usecases.SearchPeopleUseCa
 import dev.wxlf.starwarslibrary.feature_search.domain.usecases.SearchPlanetsUseCase
 import dev.wxlf.starwarslibrary.feature_search.domain.usecases.SearchStarshipsUseCase
 import dev.wxlf.starwarslibrary.feature_search.presentation.elements.FilterElement
+import dev.wxlf.starwarslibrary.feature_search.presentation.elements.SearchElement
 import dev.wxlf.starwarslibrary.feature_search.presentation.util.SearchType
 import dev.wxlf.starwarslibrary.feature_search.presentation.viewmodels.SearchViewModel
 
@@ -45,14 +45,15 @@ fun SearchScreen(viewModel: SearchViewModel = hiltViewModel()) {
         searchPeopleState,
         searchStarshipsState,
         searchPlanetsState
-    )
+    ) { query, type -> viewModel.search(query, type) }
 }
 
 @Composable
 fun SearchScreenContent(
     searchPeopleState: SearchPeopleUseCase.Result,
     searchStarshipsState: SearchStarshipsUseCase.Result,
-    searchPlanetsState: SearchPlanetsUseCase.Result
+    searchPlanetsState: SearchPlanetsUseCase.Result,
+    search: (query: String, type: SearchType) -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -62,29 +63,17 @@ fun SearchScreenContent(
     ) {
         var query by rememberSaveable { mutableStateOf("") }
         var type: SearchType by rememberSaveable { mutableStateOf(SearchType.PEOPLE) }
-        TextField(
-            modifier = Modifier
-                .fillMaxWidth(),
-            value = query,
-            onValueChange = { query = it },
-            placeholder = {
-                Text(
-                    text = stringResource(
-                        R.string.search_placeholder
-                    )
-                )
-            },
-            leadingIcon = {
-                Icon(
-                    Icons.Default.Search,
-                    contentDescription = stringResource(R.string.search_placeholder)
-                )
-            }
-        )
+
+        SearchElement(query = query) {
+            query = it
+            search(query, type)
+        }
         FilterElement(type = type, changeType = { type = it })
 
         if (query.length < 2)
             Column(
+                modifier = Modifier
+                    .padding(top = 16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
@@ -113,8 +102,8 @@ fun StarWarsContentPreview() {
             SearchScreenContent(
                 SearchPeopleUseCase.Result.Loading,
                 SearchStarshipsUseCase.Result.Loading,
-                SearchPlanetsUseCase.Result.Loading
-            )
+                SearchPlanetsUseCase.Result.Loading,
+            ) { _, _ -> }
         }
     }
 }

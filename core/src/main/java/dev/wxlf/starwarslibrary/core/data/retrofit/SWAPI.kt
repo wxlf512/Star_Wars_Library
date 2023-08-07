@@ -11,15 +11,15 @@ import retrofit2.http.Query
 
 interface SWAPI {
 
-    @GET("/people")
+    @GET("people")
     suspend fun searchPeople(@Query("search") query: String): SWModel<PersonModel>
 
-    @GET("/starships")
+    @GET("starships")
     suspend fun searchStarships(@Query("search") query: String): SWModel<StarshipModel>
 
-    @GET("/planets")
+    @GET("planets")
     suspend fun searchPlanets(@Query("search") query: String): SWModel<PlanetModel>
 
-    @GET("/films/{id}")
+    @GET("films/{id}")
     suspend fun getFilm(@Path("id") id: Int): FilmModel
 }

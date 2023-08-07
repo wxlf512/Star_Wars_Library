@@ -16,6 +16,12 @@ interface SWRepository {
 
     suspend fun searchPlanets(query: String): SWModel<PlanetModel>
 
+    suspend fun getPerson(id: Int): PersonModel
+
+    suspend fun getStarship(id: Int): StarshipModel
+
+    suspend fun getPlanet(id: Int): PlanetModel
+
     suspend fun getFilm(id: Int): FilmModel
 
 

@@ -23,6 +23,15 @@ class SWRepositoryImpl(
     override suspend fun searchPlanets(query: String): SWModel<PlanetModel> =
         remote.searchPlanets(query)
 
+    override suspend fun getPerson(id: Int): PersonModel =
+        remote.getPerson(id)
+
+    override suspend fun getStarship(id: Int): StarshipModel =
+        remote.getStarship(id)
+
+    override suspend fun getPlanet(id: Int): PlanetModel =
+        remote.getPlanet(id)
+
     override suspend fun getFilm(id: Int): FilmModel =
         remote.getFilm(id)
 

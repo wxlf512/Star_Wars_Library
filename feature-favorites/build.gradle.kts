@@ -1,27 +1,20 @@
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
-    alias(libs.plugins.androidApplication)
+    alias(libs.plugins.androidLibrary)
     alias(libs.plugins.kotlinAndroid)
     alias(libs.plugins.kapt)
     alias(libs.plugins.hilt)
 }
 
 android {
-    namespace = "dev.wxlf.starwarslibrary"
+    namespace = "dev.wxlf.starwarslibrary.feature_favorites"
     compileSdk = 33
 
     defaultConfig {
-        applicationId = "dev.wxlf.starwarslibrary"
         minSdk = 28
-        //noinspection OldTargetApi
-        targetSdk = 33
-        versionCode = 1
-        versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        vectorDrawables {
-            useSupportLibrary = true
-        }
+        consumerProguardFiles("consumer-rules.pro")
     }
 
     buildTypes {
@@ -56,8 +49,6 @@ android {
 dependencies {
     // Project
     implementation(projects.core)
-    implementation(projects.featureSearch)
-    implementation(projects.featureFavorites)
 
     // Core
     implementation(libs.core.ktx)
@@ -70,7 +61,6 @@ dependencies {
     implementation(libs.ui.graphics)
     implementation(libs.ui.tooling.preview)
     implementation(libs.material3)
-    implementation(libs.accompanist.systemuicontroller)
 
     // Navigation
     implementation(libs.navigation.compose)
@@ -83,10 +73,12 @@ dependencies {
 
     // Test
     testImplementation(libs.junit)
+    testImplementation(libs.mockito.core)
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.espresso.core)
     androidTestImplementation(platform(libs.compose.bom))
     androidTestImplementation(libs.ui.test.junit4)
     debugImplementation(libs.ui.tooling)
     debugImplementation(libs.ui.test.manifest)
+    debugImplementation(libs.bundles.customview)
 }

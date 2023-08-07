@@ -104,7 +104,7 @@ fun FavoritesScreenContent(
                     modifier = Modifier
                         .imePadding()
                         .fillMaxSize()
-                        .padding(8.dp)
+                        .padding(horizontal = 8.dp)
                 ) {
                     Text(
                         loadFavoritesState.msg,
@@ -121,7 +121,7 @@ fun FavoritesScreenContent(
             is LoadFavoritesUseCase.Result.Success -> {
                 if (loadFavoritesState.favorites.isEmpty() && !films)
                     Column(
-                        modifier = Modifier.fillMaxHeight().padding(8.dp),
+                        modifier = Modifier.fillMaxHeight().padding(horizontal = 8.dp),
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.Center
                     ) {
@@ -137,7 +137,7 @@ fun FavoritesScreenContent(
                     }
                 else
                     FavoritesResultElement(
-                        modifier = Modifier.imePadding().padding(8.dp),
+                        modifier = Modifier.imePadding().padding(horizontal = 8.dp),
                         deleteFromFavoritesState = deleteFromFavoritesState,
                         loadFavoritesState = loadFavoritesState,
                         getPeopleState = getPeopleState,

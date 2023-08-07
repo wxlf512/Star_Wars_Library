@@ -95,7 +95,7 @@ fun SearchScreenContent(
             Column(
                 modifier = Modifier
                     .fillMaxHeight()
-                    .padding(8.dp),
+                    .padding(horizontal = 8.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
@@ -110,7 +110,7 @@ fun SearchScreenContent(
             SearchResultElement(
                 modifier = Modifier
                     .imePadding()
-                    .padding(8.dp),
+                    .padding(horizontal = 8.dp),
                 searchPeopleState = searchPeopleState,
                 searchStarshipsState = searchStarshipsState,
                 searchPlanetsState = searchPlanetsState,

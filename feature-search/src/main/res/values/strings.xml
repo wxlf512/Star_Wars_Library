@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="search_placeholder">Search</string>
+    <string name="people">People</string>
+    <string name="starships">Starships</string>
+    <string name="planets">Planets</string>
+    <string name="search_tip">Start type query to see results</string>
+    <string name="gender">Gender: %1$s</string>
+    <string name="starships_count">Starships: %1$s</string>
+    <string name="favorite_button">Add to favorite</string>
+    <string name="nothing_found">Nothing found :(</string>
+    <string name="starship_passengers_count">Passengers count: %1$s</string>
+    <string name="starship_manufacturer">"Manufacturer: "</string>
+    <string name="starship_model">"Model: "</string>
+    <string name="planet_diameter">Diameter: %1$s</string>
+    <string name="planet_population">Population: %1$s</string>
+</resources>

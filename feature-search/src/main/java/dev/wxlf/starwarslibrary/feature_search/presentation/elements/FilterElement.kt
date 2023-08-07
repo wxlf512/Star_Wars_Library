@@ -23,7 +23,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.Wallpapers
 import dev.wxlf.starwarslibrary.core.ui.theme.StarWarsLibraryTheme
 import dev.wxlf.starwarslibrary.feature_search.R
-import dev.wxlf.starwarslibrary.feature_search.presentation.util.SearchType
+import dev.wxlf.starwarslibrary.core.util.SearchType
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

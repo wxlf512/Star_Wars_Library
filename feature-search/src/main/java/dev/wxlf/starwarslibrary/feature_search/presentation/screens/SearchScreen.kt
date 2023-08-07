@@ -27,14 +27,17 @@ import androidx.compose.ui.tooling.preview.Wallpapers
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import dev.wxlf.starwarslibrary.core.ui.theme.StarWarsLibraryTheme
+import dev.wxlf.starwarslibrary.core.util.SearchType
 import dev.wxlf.starwarslibrary.feature_search.R
+import dev.wxlf.starwarslibrary.feature_search.domain.usecases.AddToFavoritesUseCase
+import dev.wxlf.starwarslibrary.feature_search.domain.usecases.DeleteFromFavoritesUseCase
+import dev.wxlf.starwarslibrary.feature_search.domain.usecases.LoadFavoritesUseCase
 import dev.wxlf.starwarslibrary.feature_search.domain.usecases.SearchPeopleUseCase
 import dev.wxlf.starwarslibrary.feature_search.domain.usecases.SearchPlanetsUseCase
 import dev.wxlf.starwarslibrary.feature_search.domain.usecases.SearchStarshipsUseCase
 import dev.wxlf.starwarslibrary.feature_search.presentation.elements.FilterElement
 import dev.wxlf.starwarslibrary.feature_search.presentation.elements.SearchElement
 import dev.wxlf.starwarslibrary.feature_search.presentation.elements.SearchResultElement
-import dev.wxlf.starwarslibrary.feature_search.presentation.util.SearchType
 import dev.wxlf.starwarslibrary.feature_search.presentation.viewmodels.SearchViewModel
 
 @Composable
@@ -42,11 +45,19 @@ fun SearchScreen(viewModel: SearchViewModel = hiltViewModel()) {
     val searchPeopleState by viewModel.searchPeopleState.collectAsState()
     val searchStarshipsState by viewModel.searchStarshipsState.collectAsState()
     val searchPlanetsState by viewModel.searchPlanetsState.collectAsState()
+    val addToFavoritesState by viewModel.addToFavoritesState.collectAsState()
+    val deleteFromFavoritesState by viewModel.deleteFromFavoritesState.collectAsState()
+    val loadFavoritesState by viewModel.loadFavoritesState.collectAsState()
 
     SearchScreenContent(
         searchPeopleState,
         searchStarshipsState,
-        searchPlanetsState
+        searchPlanetsState,
+        addToFavoritesState,
+        deleteFromFavoritesState,
+        loadFavoritesState,
+        addToFavorites = { url, type -> viewModel.addToFavorites(url, type) },
+        deleteFromFavorites = { url, type -> viewModel.deleteFromFavorites(url, type) }
     ) { query, type -> viewModel.search(query, type) }
 }
 
@@ -55,6 +66,11 @@ fun SearchScreenContent(
     searchPeopleState: SearchPeopleUseCase.Result,
     searchStarshipsState: SearchStarshipsUseCase.Result,
     searchPlanetsState: SearchPlanetsUseCase.Result,
+    addToFavoritesState: AddToFavoritesUseCase.Result,
+    deleteFromFavoritesState: DeleteFromFavoritesUseCase.Result,
+    loadFavoritesState: LoadFavoritesUseCase.Result,
+    addToFavorites: (url: String, type: SearchType) -> Unit,
+    deleteFromFavorites: (url: String, type: SearchType) -> Unit,
     search: (query: String, type: SearchType) -> Unit
 ) {
     Column(
@@ -93,6 +109,11 @@ fun SearchScreenContent(
                 searchPeopleState = searchPeopleState,
                 searchStarshipsState = searchStarshipsState,
                 searchPlanetsState = searchPlanetsState,
+                addToFavoritesState = addToFavoritesState,
+                deleteFromFavoritesState = deleteFromFavoritesState,
+                loadFavoritesState = loadFavoritesState,
+                addToFavorites = { url, favType -> addToFavorites(url, favType) },
+                deleteFromFavorites = { url, favType -> deleteFromFavorites(url, favType) },
                 type = type
             )
     }
@@ -114,6 +135,11 @@ fun StarWarsContentPreview() {
                 SearchPeopleUseCase.Result.Loading,
                 SearchStarshipsUseCase.Result.Loading,
                 SearchPlanetsUseCase.Result.Loading,
+                AddToFavoritesUseCase.Result.Loading,
+                DeleteFromFavoritesUseCase.Result.Loading,
+                LoadFavoritesUseCase.Result.Loading,
+                addToFavorites = { _, _ -> },
+                deleteFromFavorites = { _, _ -> }
             ) { _, _ -> }
         }
     }

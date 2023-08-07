@@ -20,6 +20,15 @@ interface SWAPI {
     @GET("planets")
     suspend fun searchPlanets(@Query("search") query: String): SWModel<PlanetModel>
 
+    @GET("people/{id}")
+    suspend fun getPerson(@Path("id") id: Int): PersonModel
+
+    @GET("starships/{id}")
+    suspend fun getStarship(@Path("id") id: Int): StarshipModel
+
+    @GET("planets/{id}")
+    suspend fun getPlanet(@Path("id") id: Int): PlanetModel
+
     @GET("films/{id}")
     suspend fun getFilm(@Path("id") id: Int): FilmModel
 }

@@ -15,6 +15,14 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
+
+        kapt {
+            arguments {
+                arg("room.schemaLocation", "$projectDir/schemas")
+                arg("room.incremental", "true")
+                arg("room.expandProjection", "true")
+            }
+        }
     }
 
     buildTypes {
@@ -68,6 +76,10 @@ dependencies {
     implementation(platform(libs.okhttp3.bom))
     implementation(libs.bundles.okhttp3)
     implementation(libs.bundles.retrofit2)
+
+    // Room
+    implementation(libs.bundles.room)
+    kapt(libs.room.compiler)
 
     // Test
     testImplementation(libs.junit)

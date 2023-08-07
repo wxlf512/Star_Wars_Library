@@ -6,8 +6,14 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -21,8 +27,9 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dagger.hilt.android.AndroidEntryPoint
-import dev.wxlf.starwarslibrary.core.Routes
 import dev.wxlf.starwarslibrary.core.ui.theme.StarWarsLibraryTheme
+import dev.wxlf.starwarslibrary.core.util.Routes
+import dev.wxlf.starwarslibrary.feature_favorites.presentation.screens.FavoritesScreen
 import dev.wxlf.starwarslibrary.feature_search.presentation.screens.SearchScreen
 
 @AndroidEntryPoint
@@ -51,8 +58,11 @@ class MainActivity : ComponentActivity() {
                         topBar = {
                             TopAppBar(
                                 title = {
-                                    if (navController.currentDestination?.route == Routes.SEARCH.route)
-                                        Text(getString(R.string.star_wars_library))
+                                    when (navController.currentDestination?.route) {
+                                        Routes.SEARCH.route -> Text(getString(R.string.star_wars_library))
+                                        Routes.FAVORITES.route -> Text(getString(R.string.favorites))
+                                        else -> Text(getString(R.string.star_wars_library))
+                                    }
                                 },
                                 colors = TopAppBarDefaults.mediumTopAppBarColors(
                                     containerColor = MaterialTheme.colorScheme.primary,
@@ -61,6 +71,30 @@ class MainActivity : ComponentActivity() {
                                     actionIconContentColor = MaterialTheme.colorScheme.onPrimary
                                 )
                             )
+                        },
+                        bottomBar = {
+                            NavigationBar {
+                                NavigationBarItem(
+                                    selected = navController.currentDestination?.route == Routes.SEARCH.route,
+                                    onClick = { navController.navigate(Routes.SEARCH.route) },
+                                    icon = {
+                                        Icon(
+                                            Icons.Default.Search,
+                                            contentDescription = getString(R.string.search)
+                                        )
+                                    },
+                                    label = { Text(getString(R.string.search)) })
+                                NavigationBarItem(
+                                    selected = navController.currentDestination?.route == Routes.FAVORITES.route,
+                                    onClick = { navController.navigate(Routes.FAVORITES.route) },
+                                    icon = {
+                                        Icon(
+                                            Icons.Default.Favorite,
+                                            contentDescription = getString(R.string.favorites)
+                                        )
+                                    },
+                                    label = { Text(getString(R.string.favorites)) })
+                            }
                         }
                     ) {
                         NavHost(
@@ -70,6 +104,9 @@ class MainActivity : ComponentActivity() {
                         ) {
                             composable(Routes.SEARCH.route) {
                                 SearchScreen()
+                            }
+                            composable(Routes.FAVORITES.route) {
+                                FavoritesScreen()
                             }
                         }
                     }

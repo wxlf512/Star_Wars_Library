@@ -57,6 +57,7 @@ dependencies {
     // Project
     implementation(projects.core)
     implementation(projects.featureSearch)
+    implementation(projects.featureFavorites)
 
     // Core
     implementation(libs.core.ktx)

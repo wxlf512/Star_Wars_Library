@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
@@ -75,14 +76,13 @@ fun SearchScreenContent(
 ) {
     Column(
         modifier = Modifier
-            .fillMaxWidth()
-            .padding(8.dp),
+            .fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         var query by rememberSaveable { mutableStateOf("") }
         var type: SearchType by rememberSaveable { mutableStateOf(SearchType.PEOPLE) }
 
-        SearchElement(query = query) {
+        SearchElement(query = query, modifier = Modifier.padding(8.dp)) {
             query = it
             search(query, type)
         }
@@ -93,7 +93,9 @@ fun SearchScreenContent(
 
         if (query.length < 2)
             Column(
-                modifier = Modifier.fillMaxHeight(),
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .padding(8.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
@@ -106,6 +108,9 @@ fun SearchScreenContent(
             }
         else
             SearchResultElement(
+                modifier = Modifier
+                    .imePadding()
+                    .padding(8.dp),
                 searchPeopleState = searchPeopleState,
                 searchStarshipsState = searchStarshipsState,
                 searchPlanetsState = searchPlanetsState,

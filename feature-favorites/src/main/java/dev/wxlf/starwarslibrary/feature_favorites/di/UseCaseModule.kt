@@ -6,6 +6,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import dev.wxlf.starwarslibrary.core.data.repository.SWRepository
 import dev.wxlf.starwarslibrary.feature_favorites.domain.usecases.DeleteFromFavoritesUseCase
+import dev.wxlf.starwarslibrary.feature_favorites.domain.usecases.GetFilmsUseCase
 import dev.wxlf.starwarslibrary.feature_favorites.domain.usecases.GetPeopleUseCase
 import dev.wxlf.starwarslibrary.feature_favorites.domain.usecases.GetPlanetsUseCase
 import dev.wxlf.starwarslibrary.feature_favorites.domain.usecases.GetStarshipsUseCase
@@ -40,4 +41,9 @@ class UseCaseModule {
     @Singleton
     fun provideGetPlanetsUseCase(swRepository: SWRepository) =
         GetPlanetsUseCase(swRepository)
+
+    @Provides
+    @Singleton
+    fun provideGetFilmsUseCase(swRepository: SWRepository) =
+        GetFilmsUseCase(swRepository)
 }

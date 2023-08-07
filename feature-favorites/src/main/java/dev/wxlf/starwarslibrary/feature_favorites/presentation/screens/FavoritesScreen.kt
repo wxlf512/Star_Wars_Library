@@ -35,6 +35,7 @@ import dev.wxlf.starwarslibrary.core.ui.theme.StarWarsLibraryTheme
 import dev.wxlf.starwarslibrary.core.util.SearchType
 import dev.wxlf.starwarslibrary.feature_favorites.R
 import dev.wxlf.starwarslibrary.feature_favorites.domain.usecases.DeleteFromFavoritesUseCase
+import dev.wxlf.starwarslibrary.feature_favorites.domain.usecases.GetFilmsUseCase
 import dev.wxlf.starwarslibrary.feature_favorites.domain.usecases.GetPeopleUseCase
 import dev.wxlf.starwarslibrary.feature_favorites.domain.usecases.GetPlanetsUseCase
 import dev.wxlf.starwarslibrary.feature_favorites.domain.usecases.GetStarshipsUseCase
@@ -50,6 +51,7 @@ fun FavoritesScreen(viewModel: FavoritesViewModel = hiltViewModel()) {
     val getPeopleState by viewModel.getPeopleState.collectAsState()
     val getStarshipsState by viewModel.getStarshipsState.collectAsState()
     val getPlanetsState by viewModel.getPlanetsState.collectAsState()
+    val getFilmsState by viewModel.getFilmsState.collectAsState()
 
     FavoritesScreenContent(
         deleteFromFavoritesState,
@@ -57,7 +59,9 @@ fun FavoritesScreen(viewModel: FavoritesViewModel = hiltViewModel()) {
         getPeopleState,
         getStarshipsState,
         getPlanetsState,
-        deleteFromFavorites = { url, type -> viewModel.deleteFromFavorites(url, type) }
+        getFilmsState,
+        deleteFromFavorites = { url, type -> viewModel.deleteFromFavorites(url, type) },
+        searchFilms = { viewModel.searchFilms() }
     ) { type -> viewModel.searchFavorites(type) }
 }
 
@@ -68,24 +72,30 @@ fun FavoritesScreenContent(
     getPeopleState: GetPeopleUseCase.Result,
     getStarshipsState: GetStarshipsUseCase.Result,
     getPlanetsState: GetPlanetsUseCase.Result,
+    getFilmsState: GetFilmsUseCase.Result,
     deleteFromFavorites: (url: String, type: SearchType) -> Unit,
+    searchFilms: () -> Unit,
     searchFavorites: (type: SearchType) -> Unit
 ) {
     Column(
         modifier = Modifier
-            .fillMaxWidth()
-            .padding(8.dp),
+            .fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         var type: SearchType by rememberSaveable { mutableStateOf(SearchType.PEOPLE) }
+        var films by rememberSaveable { mutableStateOf(false) }
 
         LaunchedEffect(Unit) {
             searchFavorites(type)
         }
 
-        FilterElement(type = type) {
-            type = it
-            searchFavorites(type)
+        FilterElement(type = type) { filterType, filterFilms ->
+            type = filterType
+            films = filterFilms
+            if (!films)
+                searchFavorites(type)
+            else
+                searchFilms()
         }
 
         when (loadFavoritesState) {
@@ -94,6 +104,7 @@ fun FavoritesScreenContent(
                     modifier = Modifier
                         .imePadding()
                         .fillMaxSize()
+                        .padding(8.dp)
                 ) {
                     Text(
                         loadFavoritesState.msg,
@@ -108,9 +119,9 @@ fun FavoritesScreenContent(
 
             LoadFavoritesUseCase.Result.Loading -> {}
             is LoadFavoritesUseCase.Result.Success -> {
-                if (loadFavoritesState.favorites.isEmpty())
+                if (loadFavoritesState.favorites.isEmpty() && !films)
                     Column(
-                        modifier = Modifier.fillMaxHeight(),
+                        modifier = Modifier.fillMaxHeight().padding(8.dp),
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.Center
                     ) {
@@ -126,12 +137,15 @@ fun FavoritesScreenContent(
                     }
                 else
                     FavoritesResultElement(
+                        modifier = Modifier.imePadding().padding(8.dp),
                         deleteFromFavoritesState = deleteFromFavoritesState,
                         loadFavoritesState = loadFavoritesState,
                         getPeopleState = getPeopleState,
                         getStarshipsState = getStarshipsState,
                         getPlanetsState = getPlanetsState,
+                        getFilmsState = getFilmsState,
                         type = type,
+                        films = films,
                         deleteFromFavorites = { url, favType -> deleteFromFavorites(url, favType) }
                     )
             }
@@ -157,7 +171,9 @@ fun FavoritesScreenContentPreview() {
                 GetPeopleUseCase.Result.Loading,
                 GetStarshipsUseCase.Result.Loading,
                 GetPlanetsUseCase.Result.Loading,
-                deleteFromFavorites = { _, _ -> }
+                GetFilmsUseCase.Result.Loading,
+                deleteFromFavorites = { _, _ -> },
+                searchFilms = {}
             ) { _ -> }
         }
     }

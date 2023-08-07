@@ -15,4 +15,8 @@
     <string name="planet_population">Население: %1$s</string>
     <string name="error_while_add_to_favorites">Ошибка при добавлении в избранное</string>
     <string name="error_while_delete_from_favorites">Ошибка при удалении из избранного</string>
+    <string name="films">Фильмы</string>
+    <string name="error">Ошибка</string>
+    <string name="director">"Режиссёр: "</string>
+    <string name="producer">"Продюсер: "</string>
 </resources>

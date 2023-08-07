@@ -20,6 +20,10 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.navigation.compose.NavHost
@@ -42,6 +46,9 @@ class MainActivity : ComponentActivity() {
                 val navController = rememberNavController()
                 val systemUiController = rememberSystemUiController()
                 val darkMode = isSystemInDarkTheme()
+                var currentDestination by rememberSaveable {
+                    mutableStateOf(Routes.SEARCH.route)
+                }
 
                 SideEffect {
                     systemUiController.setSystemBarsColor(
@@ -58,10 +65,9 @@ class MainActivity : ComponentActivity() {
                         topBar = {
                             TopAppBar(
                                 title = {
-                                    when (navController.currentDestination?.route) {
+                                    when (currentDestination) {
                                         Routes.SEARCH.route -> Text(getString(R.string.star_wars_library))
                                         Routes.FAVORITES.route -> Text(getString(R.string.favorites))
-                                        else -> Text(getString(R.string.star_wars_library))
                                     }
                                 },
                                 colors = TopAppBarDefaults.mediumTopAppBarColors(
@@ -75,7 +81,7 @@ class MainActivity : ComponentActivity() {
                         bottomBar = {
                             NavigationBar {
                                 NavigationBarItem(
-                                    selected = navController.currentDestination?.route == Routes.SEARCH.route,
+                                    selected = currentDestination == Routes.SEARCH.route,
                                     onClick = { navController.navigate(Routes.SEARCH.route) },
                                     icon = {
                                         Icon(
@@ -85,7 +91,7 @@ class MainActivity : ComponentActivity() {
                                     },
                                     label = { Text(getString(R.string.search)) })
                                 NavigationBarItem(
-                                    selected = navController.currentDestination?.route == Routes.FAVORITES.route,
+                                    selected = currentDestination == Routes.FAVORITES.route,
                                     onClick = { navController.navigate(Routes.FAVORITES.route) },
                                     icon = {
                                         Icon(
@@ -103,9 +109,11 @@ class MainActivity : ComponentActivity() {
                             startDestination = Routes.SEARCH.route
                         ) {
                             composable(Routes.SEARCH.route) {
+                                currentDestination = Routes.SEARCH.route
                                 SearchScreen()
                             }
                             composable(Routes.FAVORITES.route) {
+                                currentDestination = Routes.FAVORITES.route
                                 FavoritesScreen()
                             }
                         }

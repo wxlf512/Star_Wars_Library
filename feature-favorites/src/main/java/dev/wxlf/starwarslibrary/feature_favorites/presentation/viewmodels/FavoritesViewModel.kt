@@ -59,8 +59,7 @@ class FavoritesViewModel @Inject constructor(
                     )
                 )
             )
-            _loadFavoritesState.emit(LoadFavoritesUseCase.Result.Loading)
-            _loadFavoritesState.emit(loadFavoritesUseCase(type))
+            searchFavorites(type)
         }
 
     fun searchFavorites(type: SearchType) =

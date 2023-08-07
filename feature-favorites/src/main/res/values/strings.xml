@@ -4,7 +4,6 @@
     <string name="people">People</string>
     <string name="starships">Starships</string>
     <string name="planets">Planets</string>
-    <string name="search_tip">Start type query to see results</string>
     <string name="gender">Gender: %1$s</string>
     <string name="starships_count">Starships: %1$s</string>
     <string name="favorite_button">Add to favorite</string>

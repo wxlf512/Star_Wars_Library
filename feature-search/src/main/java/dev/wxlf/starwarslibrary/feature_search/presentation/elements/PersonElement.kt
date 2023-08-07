@@ -1,7 +1,6 @@
 package dev.wxlf.starwarslibrary.feature_search.presentation.elements
 
 import android.content.res.Configuration
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -13,6 +12,7 @@ import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.Card
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -29,7 +29,12 @@ import dev.wxlf.starwarslibrary.core.ui.theme.StarWarsLibraryTheme
 import dev.wxlf.starwarslibrary.feature_search.R
 
 @Composable
-fun PersonElement(modifier: Modifier = Modifier, personModel: PersonModel, inFavorite: Boolean, onFavoriteButtonClick: () -> Unit) {
+fun PersonElement(
+    modifier: Modifier = Modifier,
+    personModel: PersonModel,
+    inFavorite: Boolean,
+    onFavoriteButtonClick: () -> Unit
+) {
     Card(
         modifier = modifier
             .fillMaxWidth()
@@ -54,11 +59,16 @@ fun PersonElement(modifier: Modifier = Modifier, personModel: PersonModel, inFav
                     Text(stringResource(R.string.starships_count, personModel.starshipsUrls.size))
                 }
             }
-            Icon(
-                if (inFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
-                contentDescription = stringResource(R.string.favorite_button),
-                modifier = Modifier.padding(start = 8.dp).clickable { onFavoriteButtonClick() }
-            )
+            IconButton(
+                onClick = { onFavoriteButtonClick() },
+                modifier = Modifier
+                    .padding(start = 8.dp)
+            ) {
+                Icon(
+                    if (inFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
+                    contentDescription = stringResource(R.string.favorite_button),
+                )
+            }
         }
     }
 }

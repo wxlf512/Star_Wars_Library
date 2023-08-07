@@ -4,7 +4,6 @@
     <string name="people">Люди</string>
     <string name="starships">Звездолёты</string>
     <string name="planets">Планеты</string>
-    <string name="search_tip">Начните вводить запрос, чтобы увидеть результаты</string>
     <string name="gender">Пол: %1$s</string>
     <string name="starships_count">Звездолёты: %1$s</string>
     <string name="favorite_button">добавить в избранное</string>

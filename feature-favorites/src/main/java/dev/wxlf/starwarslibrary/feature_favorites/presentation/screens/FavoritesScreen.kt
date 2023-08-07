@@ -35,7 +35,11 @@ import dev.wxlf.starwarslibrary.core.ui.theme.StarWarsLibraryTheme
 import dev.wxlf.starwarslibrary.core.util.SearchType
 import dev.wxlf.starwarslibrary.feature_favorites.R
 import dev.wxlf.starwarslibrary.feature_favorites.domain.usecases.DeleteFromFavoritesUseCase
+import dev.wxlf.starwarslibrary.feature_favorites.domain.usecases.GetPeopleUseCase
+import dev.wxlf.starwarslibrary.feature_favorites.domain.usecases.GetPlanetsUseCase
+import dev.wxlf.starwarslibrary.feature_favorites.domain.usecases.GetStarshipsUseCase
 import dev.wxlf.starwarslibrary.feature_favorites.domain.usecases.LoadFavoritesUseCase
+import dev.wxlf.starwarslibrary.feature_favorites.presentation.elements.FavoritesResultElement
 import dev.wxlf.starwarslibrary.feature_favorites.presentation.elements.FilterElement
 import dev.wxlf.starwarslibrary.feature_favorites.presentation.viewmodels.FavoritesViewModel
 
@@ -43,10 +47,16 @@ import dev.wxlf.starwarslibrary.feature_favorites.presentation.viewmodels.Favori
 fun FavoritesScreen(viewModel: FavoritesViewModel = hiltViewModel()) {
     val deleteFromFavoritesState by viewModel.deleteFromFavoritesState.collectAsState()
     val loadFavoritesState by viewModel.loadFavoritesState.collectAsState()
+    val getPeopleState by viewModel.getPeopleState.collectAsState()
+    val getStarshipsState by viewModel.getStarshipsState.collectAsState()
+    val getPlanetsState by viewModel.getPlanetsState.collectAsState()
 
     FavoritesScreenContent(
         deleteFromFavoritesState,
         loadFavoritesState,
+        getPeopleState,
+        getStarshipsState,
+        getPlanetsState,
         deleteFromFavorites = { url, type -> viewModel.deleteFromFavorites(url, type) }
     ) { type -> viewModel.searchFavorites(type) }
 }
@@ -55,6 +65,9 @@ fun FavoritesScreen(viewModel: FavoritesViewModel = hiltViewModel()) {
 fun FavoritesScreenContent(
     deleteFromFavoritesState: DeleteFromFavoritesUseCase.Result,
     loadFavoritesState: LoadFavoritesUseCase.Result,
+    getPeopleState: GetPeopleUseCase.Result,
+    getStarshipsState: GetStarshipsUseCase.Result,
+    getPlanetsState: GetPlanetsUseCase.Result,
     deleteFromFavorites: (url: String, type: SearchType) -> Unit,
     searchFavorites: (type: SearchType) -> Unit
 ) {
@@ -77,9 +90,11 @@ fun FavoritesScreenContent(
 
         when (loadFavoritesState) {
             is LoadFavoritesUseCase.Result.Error -> {
-                Box(modifier = Modifier
-                    .imePadding()
-                    .fillMaxSize()) {
+                Box(
+                    modifier = Modifier
+                        .imePadding()
+                        .fillMaxSize()
+                ) {
                     Text(
                         loadFavoritesState.msg,
                         style = MaterialTheme.typography.headlineLarge,
@@ -109,6 +124,16 @@ fun FavoritesScreenContent(
                             textAlign = TextAlign.Center
                         )
                     }
+                else
+                    FavoritesResultElement(
+                        deleteFromFavoritesState = deleteFromFavoritesState,
+                        loadFavoritesState = loadFavoritesState,
+                        getPeopleState = getPeopleState,
+                        getStarshipsState = getStarshipsState,
+                        getPlanetsState = getPlanetsState,
+                        type = type,
+                        deleteFromFavorites = { url, favType -> deleteFromFavorites(url, favType) }
+                    )
             }
         }
 
@@ -137,6 +162,9 @@ fun FavoritesScreenContentPreview() {
             FavoritesScreenContent(
                 DeleteFromFavoritesUseCase.Result.Loading,
                 LoadFavoritesUseCase.Result.Loading,
+                GetPeopleUseCase.Result.Loading,
+                GetStarshipsUseCase.Result.Loading,
+                GetPlanetsUseCase.Result.Loading,
                 deleteFromFavorites = { _, _ -> }
             ) { _ -> }
         }

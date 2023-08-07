@@ -1,7 +1,6 @@
 package dev.wxlf.starwarslibrary.feature_search.presentation.elements
 
 import android.content.res.Configuration
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -12,6 +11,7 @@ import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.Card
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -80,13 +80,16 @@ fun StarshipElement(
                     modifier = Modifier.align(Alignment.CenterHorizontally)
                 )
             }
-            Icon(
-                if (inFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
-                contentDescription = stringResource(R.string.favorite_button),
+            IconButton(
+                onClick = { onFavoriteButtonClick() },
                 modifier = Modifier
                     .padding(start = 8.dp)
-                    .clickable { onFavoriteButtonClick() }
-            )
+            ) {
+                Icon(
+                    if (inFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
+                    contentDescription = stringResource(R.string.favorite_button),
+                )
+            }
         }
     }
 }
